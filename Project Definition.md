@@ -10,7 +10,7 @@ Manufacturing + AI Predictive Maintenance
 
 
 
-Proposed title
+Title
 
 
 
@@ -78,7 +78,7 @@ Preventive maintenance: Service the machine according to a fixed schedule.
 
 The problem with both approaches is that they don't necessarily know when a machine is actually going to fail.
 
-**2. Define Your Project Objectives**
+**2. Project Objectives**
 
 
 
