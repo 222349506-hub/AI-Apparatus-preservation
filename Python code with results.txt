@@ -842,3 +842,1242 @@ X shape: (10000, 6)
 >>> print("y shape:", y.shape)
 y shape: (10000,)
 >>>
+
+... X_encoded = pd.get_dummies(
+...     X,
+...     columns=["Type"],
+...     dtype=int
+... )
+...
+... print("\nEncoded feature shape:")
+... print(X_encoded.shape)
+...
+... print("\nEncoded feature data types:")
+... print(X_encoded.dtypes)
+...
+... print("\nFirst five encoded records:")
+... print(X_encoded.head())
+...
+...
+
+Dataset shape:
+(10000, 14)
+
+Dataset information:
+<class 'pandas.DataFrame'>
+RangeIndex: 10000 entries, 0 to 9999
+Data columns (total 14 columns):
+ #   Column                   Non-Null Count  Dtype
+---  ------                   --------------  -----
+ 0   UDI                      10000 non-null  int64
+ 1   Product ID               10000 non-null  str
+ 2   Type                     10000 non-null  str
+ 3   Air temperature [K]      10000 non-null  float64
+ 4   Process temperature [K]  10000 non-null  float64
+ 5   Rotational speed [rpm]   10000 non-null  int64
+ 6   Torque [Nm]              10000 non-null  float64
+ 7   Tool wear [min]          10000 non-null  int64
+ 8   Machine failure          10000 non-null  int64
+ 9   TWF                      10000 non-null  int64
+ 10  HDF                      10000 non-null  int64
+ 11  PWF                      10000 non-null  int64
+ 12  OSF                      10000 non-null  int64
+ 13  RNF                      10000 non-null  int64
+dtypes: float64(3), int64(9), str(2)
+memory usage: 1.1 MB
+
+Missing values:
+UDI                        0
+Product ID                 0
+Type                       0
+Air temperature [K]        0
+Process temperature [K]    0
+Rotational speed [rpm]     0
+Torque [Nm]                0
+Tool wear [min]            0
+Machine failure            0
+TWF                        0
+HDF                        0
+PWF                        0
+OSF                        0
+RNF                        0
+dtype: int64
+
+Duplicate rows:
+0
+
+Unique values:
+UDI                        10000
+Product ID                 10000
+Type                           3
+Air temperature [K]           93
+Process temperature [K]       82
+Rotational speed [rpm]       941
+Torque [Nm]                  577
+Tool wear [min]              246
+Machine failure                2
+TWF                            2
+HDF                            2
+PWF                            2
+OSF                            2
+RNF                            2
+dtype: int64
+
+Categorical variables:
+
+Product ID
+Product ID
+M14860    1
+L47181    1
+L47182    1
+L47183    1
+L47184    1
+         ..
+M24855    1
+H39410    1
+M24857    1
+H39412    1
+M24859    1
+Name: count, Length: 10000, dtype: int64
+
+Type
+Type
+L    6000
+M    2997
+H    1003
+Name: count, dtype: int64
+
+Machine failure counts:
+Machine failure
+0    9661
+1     339
+Name: count, dtype: int64
+
+Machine failure percentages:
+Machine failure
+0    96.61
+1     3.39
+Name: proportion, dtype: float64
+
+Product types:
+<ArrowStringArray>
+['M', 'L', 'H']
+Length: 3, dtype: str
+
+Product type counts:
+Type
+L    6000
+M    2997
+H    1003
+Name: count, dtype: int64
+
+Numerical summary:
+                           count        mean         std     min     25%     50%     75%     max
+Air temperature [K]      10000.0   300.00493    2.000259   295.3   298.3   300.1   301.5   304.5
+Process temperature [K]  10000.0   310.00556    1.483734   305.7   308.8   310.1   311.1   313.8
+Rotational speed [rpm]   10000.0  1538.77610  179.284096  1168.0  1423.0  1503.0  1612.0  2886.0
+Torque [Nm]              10000.0    39.98691    9.968934     3.8    33.2    40.1    46.8    76.6
+Tool wear [min]          10000.0   107.95100   63.654147     0.0    53.0   108.0   162.0   253.0
+
+Average operating conditions by machine failure:
+                 Air temperature [K]  Process temperature [K]  Rotational speed [rpm]  Torque [Nm]  Tool wear [min]
+Machine failure
+0                         299.973999               309.995570             1540.260014    39.629655       106.693717
+1                         300.886431               310.290265             1496.486726    50.168142       143.781711
+
+Failure rate by product type (%):
+Type
+H    2.093719
+L    3.916667
+M    2.769436
+Name: Machine failure, dtype: float64
+
+Failure analysis by tool wear group:
+                 count  sum      mean  failure_rate_%
+Tool wear group
+0-50              2276   49  0.021529        2.152900
+51-100            2271   53  0.023338        2.333774
+101-150           2295   50  0.021786        2.178649
+151-200           2276   66  0.028998        2.899824
+201-250            760  116  0.152632       15.263158
+251-300              2    2  1.000000      100.000000
+
+Failure analysis by torque group:
+              count  sum      mean  failure_rate_%
+Torque group
+0-20            233   34  0.145923       14.592275
+21-30          1369    9  0.006574        0.657414
+31-40          3385   19  0.005613        0.561300
+41-50          3472   66  0.019009        1.900922
+51-60          1305  112  0.085824        8.582375
+61-70           224   87  0.388393       38.839286
+71-80            12   12  1.000000      100.000000
+
+Failure percentage by tool wear and torque:
+Torque group          0-20     21-30     31-40       41-50       51-60       61-70  71-80
+Tool wear group
+0-50             13.793103  0.000000  0.000000    1.408451    4.642857   25.925926  100.0
+51-100           19.565217  0.000000  0.000000    1.237624    5.369128   30.769231  100.0
+101-150          16.363636  0.302115  0.000000    1.262626    3.960396   27.586207  100.0
+151-200           4.000000  0.955414  0.128041    1.044386    8.385093   53.846154  100.0
+201-250          27.272727  5.319149  7.003891    9.252669   48.863636  100.000000  100.0
+251-300                NaN       NaN       NaN  100.000000  100.000000         NaN    NaN
+
+Failure mode counts:
+TWF     46
+HDF    115
+PWF     95
+OSF     98
+RNF      1
+dtype: int64
+
+Failure mode percentages:
+TWF    13.569322
+HDF    33.923304
+PWF    28.023599
+OSF    28.908555
+RNF     0.294985
+dtype: float64
+
+Model dataset:
+  Type  Air temperature [K]  Process temperature [K]  ...  Torque [Nm]  Tool wear [min]  Machine failure
+0    M                298.1                    308.6  ...         42.8                0                0
+1    L                298.2                    308.7  ...         46.3                3                0
+2    L                298.1                    308.5  ...         49.4                5                0
+3    L                298.2                    308.6  ...         39.5                7                0
+4    L                298.2                    308.7  ...         40.0                9                0
+
+[5 rows x 7 columns]
+
+X shape: (10000, 6)
+y shape: (10000,)
+
+Target counts:
+Machine failure
+0    9661
+1     339
+Name: count, dtype: int64
+
+Target percentages:
+Machine failure
+0    96.61
+1     3.39
+Name: proportion, dtype: float64
+
+Encoded feature shape:
+(10000, 8)
+
+Encoded feature data types:
+Air temperature [K]        float64
+Process temperature [K]    float64
+Rotational speed [rpm]       int64
+Torque [Nm]                float64
+Tool wear [min]              int64
+Type_H                       int64
+Type_L                       int64
+Type_M                       int64
+dtype: object
+
+First five encoded records:
+   Air temperature [K]  Process temperature [K]  Rotational speed [rpm]  ...  Type_H  Type_L  Type_M
+0                298.1                    308.6                    1551  ...       0       0       1
+1                298.2                    308.7                    1408  ...       0       1       0
+2                298.1                    308.5                    1498  ...       0       1       0
+3                298.2                    308.6                    1433  ...       0       1       0
+4                298.2                    308.7                    1408  ...       0       1       0
+
+[5 rows x 8 columns]
+>>>
+>>> X_encoded = pd.get_dummies(
+...     X,
+...     columns=["Type"],
+...     dtype=int
+... )
+...
+... print(X_encoded.shape)
+... print(X_encoded.dtypes)
+...
+(10000, 8)
+Air temperature [K]        float64
+Process temperature [K]    float64
+Rotational speed [rpm]       int64
+Torque [Nm]                float64
+Tool wear [min]              int64
+Type_H                       int64
+Type_L                       int64
+Type_M                       int64
+dtype: object
+>>> # ============================================================
+... # 18. SPLIT DATA INTO TRAINING AND TESTING SETS
+... # ============================================================
+...
+... from sklearn.model_selection import train_test_split
+...
+... X_train, X_test, y_train, y_test = train_test_split(
+...     X_encoded,
+...     y,
+...     test_size=0.2,
+...     random_state=10,
+...     stratify=y
+... )
+...
+... print("Training feature shape:", X_train.shape)
+... print("Testing feature shape:", X_test.shape)
+... print("Training target shape:", y_train.shape)
+... print("Testing target shape:", y_test.shape)
+...
+Training feature shape: (8000, 8)
+Testing feature shape: (2000, 8)
+Training target shape: (8000,)
+Testing target shape: (2000,)
+>>> print("Training set:")
+... print(y_train.value_counts())
+... print(y_train.value_counts(normalize=True) * 100)
+...
+Training set:
+Machine failure
+0    7729
+1     271
+Name: count, dtype: int64
+Machine failure
+0    96.6125
+1     3.3875
+Name: proportion, dtype: float64
+>>> print("Testing set:")
+... print(y_test.value_counts())
+... print(y_test.value_counts(normalize=True) * 100)
+...
+Testing set:
+Machine failure
+0    1932
+1      68
+Name: count, dtype: int64
+Machine failure
+0    96.6
+1     3.4
+Name: proportion, dtype: float64
+>>> from sklearn.preprocessing import StandardScaler
+>>> scaler = StandardScaler()
+>>> numeric_features = [
+...     "Air temperature [K]",
+...     "Process temperature [K]",
+...     "Rotational speed [rpm]",
+...     "Torque [Nm]",
+...     "Tool wear [min]"
+... ]
+>>> X_train_scaled = X_train.copy()
+... X_test_scaled = X_test.copy()
+...
+>>> X_train_scaled[numeric_features] = scaler.fit_transform(
+...     X_train[numeric_features]
+... )
+>>>
+>>> X_test_scaled[numeric_features] = scaler.transform(
+...     X_test[numeric_features]
+... )
+>>>
+>>> print(X_train_scaled.head())
+      Air temperature [K]  Process temperature [K]  ...  Type_L  Type_M
+9057            -1.343542                -1.071583  ...       0       1
+3403             0.650472                 0.336355  ...       1       0
+5463             1.448078                 1.610203  ...       1       0
+7226            -0.147133                -0.267047  ...       1       0
+4309             0.650472                -0.065913  ...       0       1
+
+[5 rows x 8 columns]
+>>> print(X_test_scaled.head())
+      Air temperature [K]  Process temperature [K]  ...  Type_L  Type_M
+7181             0.102118                 0.202265  ...       1       0
+5085             1.996432                 2.012471  ...       0       1
+4791             1.846881                 1.811337  ...       0       1
+1648            -1.044440                -1.473851  ...       1       0
+3944             1.099126                 0.805667  ...       1       0
+
+[5 rows x 8 columns]
+>>> scaler.fit_transform(X_train[numeric_features])
+array([[-1.34354178, -1.07158316,  0.81650768, -0.54680447, -0.1734958 ],
+       [ 0.65047233,  0.33635467, -1.12443323,  1.28217888, -0.03196446],
+       [ 1.44807797,  1.61020319,  0.12132827, -0.51665639,  0.65996653],
+       ...,
+       [ 1.29852691,  1.40906921, -0.22348071, -0.49655767,  1.6821373 ],
+       [-0.59578649,  0.06817604,  0.91661351, -0.92868011,  0.65996653],
+       [-1.14414037, -0.60227055,  0.13245114, -0.06443523, -0.81824967]],
+      shape=(8000, 5))
+>>> scaler.transform(X_test[numeric_features])
+array([[ 0.10211845,  0.20226535, -1.15780184,  1.22188273, -1.22711798],
+       [ 1.99643185,  2.01247114, -0.90197582,  1.61380773, -0.73962115],
+       [ 1.8468808 ,  1.81133716, -0.39032377,  0.8601058 ,  0.61278941],
+       ...,
+       [-0.04743261, -0.40113657, -1.20785475,  1.40277119, -1.17994087],
+       [-1.09429002, -1.60794043, -1.0410117 ,  0.95055003, -0.09486728],
+       [ 0.35137021,  0.87271194, -0.29021794, -0.01418844, -0.9126039 ]],
+      shape=(2000, 5))
+>>> print(X_train_scaled[numeric_features].describe())
+       Air temperature [K]  ...  Tool wear [min]
+count         8.000000e+03  ...     8.000000e+03
+mean          1.634071e-14  ...     6.528111e-17
+std           1.000063e+00  ...     1.000063e+00
+min          -2.340549e+00  ...    -1.698889e+00
+25%          -8.450383e-01  ...    -8.654268e-01
+50%           5.226809e-02  ...    -5.130511e-04
+75%           7.501730e-01  ...     8.486750e-01
+max           2.245684e+00  ...     2.279714e+00
+
+[8 rows x 5 columns]
+>>>  print(X_train_scaled.head()
+  File "<python-input-20>", line 1
+    print(X_train_scaled.head()
+IndentationError: unexpected indent
+>>> print(X_train_scaled.head())
+      Air temperature [K]  Process temperature [K]  ...  Type_L  Type_M
+9057            -1.343542                -1.071583  ...       0       1
+3403             0.650472                 0.336355  ...       1       0
+5463             1.448078                 1.610203  ...       1       0
+7226            -0.147133                -0.267047  ...       1       0
+4309             0.650472                -0.065913  ...       0       1
+
+[5 rows x 8 columns]
+>>>
+>>> >>> from sklearn.linear_model import LogisticRegressin
+  File "<python-input-23>", line 1
+    >>> from sklearn.linear_model import LogisticRegressin
+    ^^
+SyntaxError: invalid syntax
+>>> >>> from sklearn.linear_model import LogisticRegression
+  File "<python-input-24>", line 1
+    >>> from sklearn.linear_model import LogisticRegression
+    ^^
+SyntaxError: invalid syntax
+>>> from sklearn.linear_model import LogisticRegression
+>>> logistic_model = LogisticRegression(
+...     max_iter=1000,
+...     random_state=42
+... )
+>>> logistic_model.fit(X_train_scaled, y_train)
+LogisticRegression(max_iter=1000, random_state=42)
+>>> y_pred = logistic_model.predict(X_test_scaled)
+>>> print(y_pred[:20])
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+>>> print(y_test[:20].values)
+... print(y_pred[:20])
+...
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+>>> from sklearn.metrics import (
+...     confusion_matrix,
+...     classification_report,
+...     accuracy_score,
+...     precision_score,
+...     recall_score,
+...     f1_score
+... )
+>>>
+>>> cm = confusion_matrix(y_test, y_pred)
+>>>
+>>> print("Confusion Matrix:")
+... print(cm)
+...
+Confusion Matrix:
+[[1926    6]
+ [  55   13]]
+>>> print("Accuracy:", accuracy_score(y_test, y_pred))
+Accuracy: 0.9695
+>>> print("Precision:", precision_score(y_test, y_pred))
+Precision: 0.6842105263157895
+>>> print("Recall:", recall_score(y_test, y_pred))
+Recall: 0.19117647058823528
+>>> print("F1-score:", f1_score(y_test, y_pred))
+F1-score: 0.2988505747126437
+>>> print(classification_report(y_test, y_pred))
+              precision    recall  f1-score   support
+
+           0       0.97      1.00      0.98      1932
+           1       0.68      0.19      0.30        68
+
+    accuracy                           0.97      2000
+   macro avg       0.83      0.59      0.64      2000
+weighted avg       0.96      0.97      0.96      2000
+
+>>> from sklearn.metrics import roc_auc_score
+>>> y_prob = logistic_model.predict_proba(X_test_scaled)[:, 1]
+>>> roc_auc = roc_auc_score(y_test, y_prob)
+>>> print("ROC-AUC:", roc_auc)
+ROC-AUC: 0.8993042869321641
+>>> failure_probabilities = y_prob[y_test == 1]
+>>> print("Number of actual failures:", len(failure_probabilities))
+Number of actual failures: 68
+>>> print("Failure probability summary:")
+Failure probability summary:
+>>> print(pd.Series(failure_probabilities).describe())
+count    68.000000
+mean      0.287160
+std       0.253028
+min       0.001504
+25%       0.053332
+50%       0.219898
+75%       0.443883
+max       0.924131
+dtype: float64
+>>> print("Actual failures with probability >= 0.5:",
+...       (failure_probabilities >= 0.5).sum())
+Actual failures with probability >= 0.5: 13
+>>> print("Actual failures with probability >= 0.3:",
+...       (failure_probabilities >= 0.3).sum())
+Actual failures with probability >= 0.3: 28
+>>> print("Actual failures with probability >= 0.2:",
+...       (failure_probabilities >= 0.2).sum())
+Actual failures with probability >= 0.2: 40
+>>> thresholds = [0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50]
+>>> print("Threshold | Precision | Recall | F1-score")
+... print("-" * 45)
+...
+Threshold | Precision | Recall | F1-score
+---------------------------------------------
+>>> for threshold in thresholds:
+... y_pred_threshold = (y_prob >= threshold).astype(int)
+...
+  File "<python-input-54>", line 2
+    y_pred_threshold = (y_prob >= threshold).astype(int)
+    ^^^^^^^^^^^^^^^^
+IndentationError: expected an indented block after 'for' statement on line 1
+>>> for threshold in thresholds:
+...     y_pred_threshold = (y_prob >= threshold).astype(int)
+...
+>>> precision = precision_score(
+...     y_test,
+...     y_pred_threshold,
+...     zero_division=0
+... )
+>>> recall = recall_score(y_test, y_pred_threshold)
+>>> f1 = f1_score(y_test, y_pred_threshold)
+>>> print(
+...     f"{threshold:9.2f} | "
+...     f"{precision:9.3f} | "
+...     f"{recall:6.3f} | "
+...     f"{f1:8.3f}"
+... )
+     0.50 |     0.684 |  0.191 |    0.299
+>>> pd.set_option("display.max_columns", None)
+>>> print(
+...     f"{threshold:9.2f} | "
+...     f"{precision:9.3f} | "
+...     f"{recall:6.3f} | "
+...     f"{f1:8.3f}"
+... )
+     0.50 |     0.684 |  0.191 |    0.299
+>>> print(df)
+        UDI Product ID Type  Air temperature [K]  Process temperature [K]  \
+0         1     M14860    M                298.1                    308.6
+1         2     L47181    L                298.2                    308.7
+2         3     L47182    L                298.1                    308.5
+3         4     L47183    L                298.2                    308.6
+4         5     L47184    L                298.2                    308.7
+...     ...        ...  ...                  ...                      ...
+9995   9996     M24855    M                298.8                    308.4
+9996   9997     H39410    H                298.9                    308.4
+9997   9998     M24857    M                299.0                    308.6
+9998   9999     H39412    H                299.0                    308.7
+9999  10000     M24859    M                299.0                    308.7
+
+      Rotational speed [rpm]  Torque [Nm]  Tool wear [min]  Machine failure  \
+0                       1551         42.8                0                0
+1                       1408         46.3                3                0
+2                       1498         49.4                5                0
+3                       1433         39.5                7                0
+4                       1408         40.0                9                0
+...                      ...          ...              ...              ...
+9995                    1604         29.5               14                0
+9996                    1632         31.8               17                0
+9997                    1645         33.4               22                0
+9998                    1408         48.5               25                0
+9999                    1500         40.2               30                0
+
+      TWF  HDF  PWF  OSF  RNF Tool wear group Torque group
+0       0    0    0    0    0             NaN        41-50
+1       0    0    0    0    0            0-50        41-50
+2       0    0    0    0    0            0-50        41-50
+3       0    0    0    0    0            0-50        31-40
+4       0    0    0    0    0            0-50        31-40
+...   ...  ...  ...  ...  ...             ...          ...
+9995    0    0    0    0    0            0-50        21-30
+9996    0    0    0    0    0            0-50        31-40
+9997    0    0    0    0    0            0-50        31-40
+9998    0    0    0    0    0            0-50        41-50
+9999    0    0    0    0    0            0-50        41-50
+
+[10000 rows x 16 columns]
+>>> from sklearn.ensemble import RandomForestClassifier
+>>> rf_model = RandomForestClassifier(
+...     n_estimators=300,
+...     random_state=42,
+...     class_weight="balanced"
+... )
+>>> rf_model.fit(X_train, y_train)
+RandomForestClassifier(class_weight='balanced', n_estimators=300,
+                       random_state=42)
+>>> y_pred_rf = rf_model.predict(X_test)
+>>> print(y_pred_rf[:20])
+[0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+>>> print("Actual:")
+... print(y_test[:20].values)
+...
+... print("Random Forest:")
+... print(y_pred_rf[:20])
+...
+Actual:
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+Random Forest:
+[0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+>>> cm_rf = confusion_matrix(y_test, y_pred_rf)
+>>> print("Confusion Matrix:")
+... print(cm_rf)
+...
+Confusion Matrix:
+[[1915   17]
+ [  20   48]]
+>>> accuracy_rf = accuracy_score(y_test, y_pred_rf)
+>>> print("Accuracy percentage:")
+... print(accuracy_rf)
+...
+Accuracy percentage:
+0.9815
+>>> precision_rf = precision_score(
+...     y_test,
+...     y_pred_rf,
+...     zero_division=0
+... )
+>>>
+>>> print("Precision:")
+... print(precisio_rf)
+...
+Precision:
+Traceback (most recent call last):
+  File "<python-input-75>", line 2, in <module>
+    print(precisio_rf)
+          ^^^^^^^^^^^
+NameError: name 'precisio_rf' is not defined. Did you mean: 'precision_rf'?
+>>> print("Precision:")
+... print(precision_rf)
+...
+Precision:
+0.7384615384615385
+>>> recall_rf = recall_score(
+...     y_test,
+...     y_pred_rf,
+...     zero_division=0
+... )
+>>> print("Recall:")
+... print(recall_rf)
+...
+Recall:
+0.7058823529411765
+>>> f1_rf = f1_score(
+...     y_test,
+...     y_pred_rf,
+...     zero_division=0
+... )
+>>> print("F1:")
+... print(f1_rf)
+...
+F1:
+0.7218045112781954
+>>> print("\nClassification Report:")
+... print(classification_report(
+...     y_test,
+...     y_pred_rf,
+...     zero_division=0
+... ))
+...
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.99      0.99      0.99      1932
+           1       0.74      0.71      0.72        68
+
+    accuracy                           0.98      2000
+   macro avg       0.86      0.85      0.86      2000
+weighted avg       0.98      0.98      0.98      2000
+
+>>> y_prob_rf = rf_model.predict_proba(X_test)[:, 1]
+... roc_auc_rf = roc_auc_score(y_test, y_prob_rf)
+...
+... print("ROC-AUC:", roc_auc_rf)
+...
+ROC-AUC: 0.9698118377785898
+>>> feature_importance = pd.DataFrame({
+...     "Feature": X_train.columns,
+...     "Importance": rf_model.feature_importances_
+... })
+>>> X_train.columns
+Index(['Air temperature [K]', 'Process temperature [K]',
+       'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]', 'Type_H',
+       'Type_L', 'Type_M'],
+      dtype='str')
+>>> rf_model.feature_importances_
+array([0.10233656, 0.070049  , 0.29815049, 0.3065209 , 0.20816597,
+       0.00375486, 0.00564013, 0.0053821 ])
+>>> feature_importance = feature_importance.sort_values(
+...     by="Importance",
+...     ascending=False
+... )
+>>> print(feature_importance)
+                   Feature  Importance
+3              Torque [Nm]    0.306521
+2   Rotational speed [rpm]    0.298150
+4          Tool wear [min]    0.208166
+0      Air temperature [K]    0.102337
+1  Process temperature [K]    0.070049
+6                   Type_L    0.005640
+7                   Type_M    0.005382
+5                   Type_H    0.003755
+>>> model_df[
+...     [
+...         "Air temperature [K]",
+...         "Process temperature [K]",
+...         "Rotational speed [rpm]",
+...         "Torque [Nm]",
+...         "Tool wear [min]",
+...         "Machine failure"
+...     ]
+... ]
+      Air temperature [K]  Process temperature [K]  Rotational speed [rpm]  \
+0                   298.1                    308.6                    1551
+1                   298.2                    308.7                    1408
+2                   298.1                    308.5                    1498
+3                   298.2                    308.6                    1433
+4                   298.2                    308.7                    1408
+...                   ...                      ...                     ...
+9995                298.8                    308.4                    1604
+9996                298.9                    308.4                    1632
+9997                299.0                    308.6                    1645
+9998                299.0                    308.7                    1408
+9999                299.0                    308.7                    1500
+
+      Torque [Nm]  Tool wear [min]  Machine failure
+0            42.8                0                0
+1            46.3                3                0
+2            49.4                5                0
+3            39.5                7                0
+4            40.0                9                0
+...           ...              ...              ...
+9995         29.5               14                0
+9996         31.8               17                0
+9997         33.4               22                0
+9998         48.5               25                0
+9999         40.2               30                0
+
+[10000 rows x 6 columns]
+>>> .corr()
+  File "<python-input-89>", line 1
+    .corr()
+    ^
+SyntaxError: invalid syntax
+>>> model_df[
+...     [
+...         "Air temperature [K]",
+...         "Process temperature [K]",
+...         "Rotational speed [rpm]",
+...         "Torque [Nm]",
+...         "Tool wear [min]",
+...         "Machine failure"
+...     ]
+... ].corr()
+                         Air temperature [K]  Process temperature [K]  \
+Air temperature [K]                 1.000000                 0.876107
+Process temperature [K]             0.876107                 1.000000
+Rotational speed [rpm]              0.022670                 0.019277
+Torque [Nm]                        -0.013778                -0.014061
+Tool wear [min]                     0.013853                 0.013488
+Machine failure                     0.082556                 0.035946
+
+                         Rotational speed [rpm]  Torque [Nm]  Tool wear [min]  \
+Air temperature [K]                    0.022670    -0.013778         0.013853
+Process temperature [K]                0.019277    -0.014061         0.013488
+Rotational speed [rpm]                 1.000000    -0.875027         0.000223
+Torque [Nm]                           -0.875027     1.000000        -0.003093
+Tool wear [min]                        0.000223    -0.003093         1.000000
+Machine failure                       -0.044188     0.191321         0.105448
+
+                         Machine failure
+Air temperature [K]             0.082556
+Process temperature [K]         0.035946
+Rotational speed [rpm]         -0.044188
+Torque [Nm]                     0.191321
+Tool wear [min]                 0.105448
+Machine failure                 1.000000
+>>> print(correlation_matrix.round(3))
+Traceback (most recent call last):
+  File "<python-input-91>", line 1, in <module>
+    print(correlation_matrix.round(3))
+          ^^^^^^^^^^^^^^^^^^
+NameError: name 'correlation_matrix' is not defined. Did you mean: 'confusion_matrix'?
+>>> correlation_matrix = model_df[
+...     [
+...         "Air temperature [K]",
+...         "Process temperature [K]",
+...         "Rotational speed [rpm]",
+...         "Torque [Nm]",
+...         "Tool wear [min]",
+...         "Machine failure"
+...     ]
+... ].corr()
+>>>
+>>> print(correlation_matrix.round(3))
+                         Air temperature [K]  Process temperature [K]  \
+Air temperature [K]                    1.000                    0.876
+Process temperature [K]                0.876                    1.000
+Rotational speed [rpm]                 0.023                    0.019
+Torque [Nm]                           -0.014                   -0.014
+Tool wear [min]                        0.014                    0.013
+Machine failure                        0.083                    0.036
+
+                         Rotational speed [rpm]  Torque [Nm]  Tool wear [min]  \
+Air temperature [K]                       0.023       -0.014            0.014
+Process temperature [K]                   0.019       -0.014            0.013
+Rotational speed [rpm]                    1.000       -0.875            0.000
+Torque [Nm]                              -0.875        1.000           -0.003
+Tool wear [min]                           0.000       -0.003            1.000
+Machine failure                          -0.044        0.191            0.105
+
+                         Machine failure
+Air temperature [K]                0.083
+Process temperature [K]            0.036
+Rotational speed [rpm]            -0.044
+Torque [Nm]                        0.191
+Tool wear [min]                    0.105
+Machine failure                    1.000
+>>> from sklearn.model_selection import StratifiedKFold, cross_val_scor\
+e
+>>> cv = StratifiedKFold(
+...     n_splits=5,
+...     shuffle=True,
+...     random_state=42
+... )
+>>> cv_scores = cross_val_score(
+...     rf_model,
+...     X_train,
+...     y_train,
+...     cv=cv,
+...     scoring="roc_auc"
+... )
+>>>
+>>> cv_scores
+array([0.96246586, 0.98520675, 0.98893201, 0.9212364 , 0.96575463])
+>>> print("ROC-AUC scores for each fold:")
+... print(cv_scores)
+...
+ROC-AUC scores for each fold:
+[0.96246586 0.98520675 0.98893201 0.9212364  0.96575463]
+>>> print("\nMean ROC-AUC:", cv_scores.mean())
+
+Mean ROC-AUC: 0.9647191314290875
+>>> print("Standard deviation:", cv_scores.std())
+Standard deviation: 0.024095239845711595
+>>> print("Training observations:", len(X_train))
+... print("Training failures:", y_train.sum())
+... print("Training non-failures:", (y_train == 0).sum())
+...
+Training observations: 8000
+Training failures: 271
+Training non-failures: 7729
+>>> from sklearn.model_selection import GridSearchCV
+>>> param_grid = {
+...     "n_estimators": [200, 300],
+...     "max_depth": [None, 10, 20],
+...     "min_samples_leaf": [1, 2],
+...     "class_weight": ["balanced"]
+... }
+>>> grid_search = GridSearchCV(
+...     estimator=RandomForestClassifier(
+...         random_state=42
+...     ),
+...     param_grid=param_grid,
+...     cv=5,
+...     scoring="roc_auc",
+...     n_jobs=-1
+... )
+>>> RandomForestClassifier(
+...     random_state=42
+... )
+RandomForestClassifier(random_state=42)
+>>> param_grid=param_grid
+>>> cv=5
+>>> scoring="roc_auc"
+>>> n_jobs=-1
+>>> grid_search.fit(X_train, y_train)
+GridSearchCV(cv=5, estimator=RandomForestClassifier(random_state=42), n_jobs=-1,
+             param_grid={'class_weight': ['balanced'],
+                         'max_depth': [None, 10, 20],
+                         'min_samples_leaf': [1, 2],
+                         'n_estimators': [200, 300]},
+             scoring='roc_auc')
+>>> print("Best parameters:")
+... print(grid_search.best_params_)
+...
+Best parameters:
+{'class_weight': 'balanced', 'max_depth': 10, 'min_samples_leaf': 2, 'n_estimators': 300}
+>>> print("\nBest cross-validation ROC-AUC:")
+... print(grid_search.best_score_)
+...
+
+Best cross-validation ROC-AUC:
+0.9702197052689021
+>>> best_rf_model = grid_search.best_estimator_
+...
+... best_rf_model.fit(X_train, y_train)
+...
+... print("Final Random Forest trained successfully")
+...
+Final Random Forest trained successfully
+>>> y_pred_final = best_rf_model.predict(X_test)
+...
+... cm_final = confusion_matrix(y_test, y_pred_final)
+...
+... print("Confusion Matrix:")
+... print(cm_final)
+...
+... accuracy_final = accuracy_score(y_test, y_pred_final)
+... precision_final = precision_score(y_test, y_pred_final, zero_divisi\
+on=0)
+... recall_final = recall_score(y_test, y_pred_final, zero_division=0)
+... f1_final = f1_score(y_test, y_pred_final, zero_division=0)
+...
+... print("\nAccuracy:", accuracy_final)
+... print("Precision:", precision_final)
+... print("Recall:", recall_final)
+... print("F1-score:", f1_final)
+...
+... print("\nClassification Report:")
+... print(classification_report(y_test, y_pred_final, zero_division=0))
+...
+Confusion Matrix:
+[[1873   59]
+ [  10   58]]
+
+Accuracy: 0.9655
+Precision: 0.49572649572649574
+Recall: 0.8529411764705882
+F1-score: 0.6270270270270271
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.99      0.97      0.98      1932
+           1       0.50      0.85      0.63        68
+
+    accuracy                           0.97      2000
+   macro avg       0.75      0.91      0.80      2000
+weighted avg       0.98      0.97      0.97      2000
+
+>>> y_prob_final = best_rf_model.predict_proba(X_test)[:, 1]
+...
+... roc_auc_final = roc_auc_score(y_test, y_prob_final)
+...
+... print("Final Random Forest ROC-AUC:", roc_auc_final)
+...
+Final Random Forest ROC-AUC: 0.9730848861283644
+>>> thresholds = [0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50]
+...
+... print("Threshold | Precision | Recall | F1-score")
+... print("---------------------------------------------")
+...
+... for threshold in thresholds:
+...     y_pred_threshold = (y_prob_final >= threshold).astype(int)
+...
+...     precision = precision_score(
+...         y_test,
+...         y_pred_threshold,
+...         zero_division=0
+...     )
+...
+...     recall = recall_score(
+...         y_test,
+...         y_pred_threshold,
+...         zero_division=0
+...     )
+...
+...     f1 = f1_score(
+...         y_test,
+...         y_pred_threshold,
+...         zero_division=0
+...     )
+...
+...     print(
+...         f"{threshold:9.2f} | "
+...         f"{precision:9.3f} | "
+...         f"{recall:6.3f} | "
+...         f"{f1:8.3f}"
+...     )
+...
+Threshold | Precision | Recall | F1-score
+---------------------------------------------
+     0.20 |     0.246 |  0.956 |    0.392
+     0.25 |     0.274 |  0.956 |    0.426
+     0.30 |     0.300 |  0.926 |    0.453
+     0.35 |     0.346 |  0.926 |    0.504
+     0.40 |     0.386 |  0.897 |    0.540
+     0.45 |     0.455 |  0.882 |    0.600
+     0.50 |     0.496 |  0.853 |    0.627
+>>> analysis_df = X_test.copy()
+>>> analysis_df["Actual failure"] = y_test
+>>> analysis_df["Predicted probability"] = y_prob_final
+>>> analysis_df["Torque group"] = pd.cut(
+...     analysis_df["Torque [Nm]"],
+...     bins=[0, 20, 30, 40, 50, 60, 70, 80],
+...     labels=["0-20", "21-30", "31-40", "41-50", "51-60", "61-70", "7\
+1-80"]
+... )
+>>> torque_model_analysis = (
+...     analysis_df
+...     .groupby("Torque group", observed=True)
+...     .agg(
+...     observations=("Actual failure", "count"),
+...     actual_failures=("Actual failure", "sum"),
+...     actual_failure_rate=("Actual failure", "mean"),
+...     mean_predicted_probability=("Predicted probability", "mean")
+...     torque_model_analysis["actual_failure_rate"] *= 100
+...     print(torque_model_analysis.round(3))
+...
+  File "<python-input-123>", line 4
+    .agg(
+        ^
+SyntaxError: '(' was never closed
+>>> torque_model_analysis = (
+...     analysis_df
+...     .groupby("Torque group", observed=True)
+...     .agg(
+...         observations=("Actual failure", "count"),
+...         actual_failures=("Actual failure", "sum"),
+...         actual_failure_rate=("Actual failure", "mean"),
+...         mean_predicted_probability=("Predicted probability", "mean"\
+)
+...     )
+... )
+...
+... torque_model_analysis["actual_failure_rate"] *= 100
+...
+... print(torque_model_analysis.round(3))
+...
+              observations  actual_failures  actual_failure_rate  \
+Torque group
+0-20                    48                3                6.250
+21-30                  255                3                1.176
+31-40                  692                2                0.289
+41-50                  670               10                1.493
+51-60                  281               29               10.320
+61-70                   52               19               36.538
+71-80                    2                2              100.000
+
+              mean_predicted_probability
+Torque group
+0-20                               0.236
+21-30                              0.044
+31-40                              0.041
+41-50                              0.075
+51-60                              0.212
+61-70                              0.592
+71-80                              0.675
+>>> analysis_df["Tool wear group"] = pd.cut(
+...     analysis_df["Tool wear [min]"],
+...     bins=[0, 50, 100, 150, 200, 250, 300],
+...     labels=["0-50", "51-100", "101-150", "151-200", "201-250", "251\
+-300"]
+... )
+>>> toolwear_model_analysis = (
+...     analysis_df
+...     .groupby("Tool wear group", observed=True)
+...     .agg(
+...     observations=("Actual failure", "count"),
+...     actual_failures=("Actual failure", "sum"),
+...     actual_failure_rate=("Actual failure", "mean"),
+...     mean_predicted_probability=("Predicted probability", "mean")
+... )
+... toolwear_model_analysis["actual_failure_rate"] *= 100
+... print(toolwear_model_analysis.round(3))
+...
+  File "<python-input-126>", line 1
+    toolwear_model_analysis = (
+                              ^
+SyntaxError: '(' was never closed
+>>> toolwear_model_analysis = (
+...     analysis_df
+...     .groupby("Tool wear group", observed=True)
+...     .agg(
+...         observations=("Actual failure", "count"),
+...         actual_failures=("Actual failure", "sum"),
+...         actual_failure_rate=("Actual failure", "mean"),
+...         mean_predicted_probability=("Predicted probability", "mean"\
+)
+...     )
+... )
+...
+... toolwear_model_analysis["actual_failure_rate"] *= 100
+...
+... print(toolwear_model_analysis.round(3))
+...
+                 observations  actual_failures  actual_failure_rate  \
+Tool wear group
+0-50                      449                9                2.004
+51-100                    472               10                2.119
+101-150                   445                8                1.798
+151-200                   463               16                3.456
+201-250                   148               25               16.892
+
+                 mean_predicted_probability
+Tool wear group
+0-50                                  0.066
+51-100                                0.069
+101-150                               0.066
+151-200                               0.082
+201-250                               0.417
+>>> model_comparison = pd.DataFrame({
+...     "Model": [
+...         "Logistic Regression",
+...         "Random Forest (Initial)",
+...         "Random Forest (Tuned)"
+...     ],
+...     "Accuracy": [
+...         accuracy_score(y_test, y_pred),
+...         accuracy_score(y_test, y_pred_rf),
+...         accuracy_score(y_test, y_pred_final)
+...     ],
+...     "Precision": [
+...         precision_score(y_test, y_pred),
+...         precision_score(y_test, y_pred_rf),
+...         precision_score(y_test, y_pred_final)
+...     ],
+...     "Recall": [
+...         recall_score(y_test, y_pred),
+...         recall_score(y_test, y_pred_rf),
+...         recall_score(y_test, y_pred_final)
+...     ],
+...     "F1": [
+...         f1_score(y_test, y_pred),
+...         f1_score(y_test, y_pred_rf),
+...         f1_score(y_test, y_pred_final)
+...     ],
+...     "ROC-AUC": [
+...         roc_auc_score(y_test, y_prob),
+...         roc_auc_score(y_test, rf_model.predict_proba(X_test)[:, 1])\
+,
+...         roc_auc_score(y_test, y_prob_final)
+...     ]
+... })
+...
+... print(model_comparison.round(4))
+...
+                     Model  Accuracy  Precision  Recall      F1  ROC-AUC
+0      Logistic Regression    0.9695     0.6842  0.1912  0.2989   0.8993
+1  Random Forest (Initial)    0.9815     0.7385  0.7059  0.7218   0.9698
+2    Random Forest (Tuned)    0.9655     0.4957  0.8529  0.6270   0.9731
+>>> import joblib
+>>> joblib.dump(best_rf_model, "machine_failure_model.pkl")
+['machine_failure_model.pkl']
+>>> import os
+... print(os.getcwd())
+...
+C:\Users\EDSON\Documents
+>>> joblib.dump(
+...     best_rf_model,
+...     r"C:\Users\EDSON\Documents\AI-Apparatus-preservation\machine_fa\
+ilure_model.pkl"
+... )
+['C:\\Users\\EDSON\\Documents\\AI-Apparatus-preservation\\machine_failure_model.pkl']
+>>>
+>>> import os
+... print(os.getcwd())
+...
+C:\Users\EDSON\Documents
+>>> import joblib
+...
+... model = joblib.load(
+...     r"C:\Users\EDSON\Documents\AI-Apparatus-preservation\machine_fa\
+ilure_model.pkl"
+... )
+...
+>>> print(model)
+RandomForestClassifier(class_weight='balanced', max_depth=10,
+                       min_samples_leaf=2, n_estimators=300, random_state=42)
+>>> test_machine = pd.DataFrame({
+...     "Type_H": [0],
+...     "Type_L": [1],
+...     "Type_M": [0],
+...     "Air temperature [K]": [300],
+...     "Process temperature [K]": [310],
+...     "Rotational speed [rpm]": [1500],
+...     "Torque [Nm]": [50],
+...     "Tool wear [min]": [200]
+... })
+>>> prediction = model.predict(test_machine)
+...
+... print("Prediction:", prediction)
+...
+Traceback (most recent call last):
+  File "<python-input-138>", line 1, in <module>
+    prediction = model.predict(test_machine)
+  File "C:\Users\EDSON\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\ensemble\_forest.py", line 903, in predict
+    proba = self.predict_proba(X)
+  File "C:\Users\EDSON\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\ensemble\_forest.py", line 945, in predict_proba
+    X = self._validate_X_predict(X)
+  File "C:\Users\EDSON\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\ensemble\_forest.py", line 615, in _validate_X_predict
+    X = validate_data(
+        self,
+    ...<4 lines>...
+        ensure_all_finite=ensure_all_finite,
+    )
+  File "C:\Users\EDSON\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\utils\validation.py", line 3016, in validate_data
+    _check_feature_names(_estimator, X, reset=reset)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\EDSON\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\utils\validation.py", line 2868, in _check_feature_names
+    raise ValueError(message)
+ValueError: The feature names should match those that were passed during fit.
+Feature names must be in the same order as they were in fit.
+
+>>> print(model.feature_names_in_)
+['Air temperature [K]' 'Process temperature [K]' 'Rotational speed [rpm]'
+ 'Torque [Nm]' 'Tool wear [min]' 'Type_H' 'Type_L' 'Type_M']
+>>> test_machine = pd.DataFrame({
+...     "Air temperature [K]": [300],
+...     "Process temperature [K]": [310],
+...     "Rotational speed [rpm]": [1500],
+...     "Torque [Nm]": [50],
+...     "Tool wear [min]": [200],
+...     "Type_H": [0],
+...     "Type_L": [1],
+...     "Type_M": [0]
+... })
+>>>
+>>> print(test_machine.columns)
+Index(['Air temperature [K]', 'Process temperature [K]',
+       'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]', 'Type_H',
+       'Type_L', 'Type_M'],
+      dtype='str')
+>>> prediction = model.predict(test_machine)
+...
+... print("Prediction:", prediction)
+...
+Prediction: [0]
+
+>>> if prediction[0] == 1:
+...
+...     print(
+...         "Result: Machine failure predicted."
+...     )
+...
+... else:
+...
+...     print(
+...         "Result: No machine failure predicted."
+...     )
+...
+...
+Result: No machine failure predicted.
+>>> probability = model.predict_proba(test_machine)[0][1]
+...
+... print("Failure probability:", probability)
+... print("Failure probability (%):", probability * 100)
+...
+Failure probability: 0.14286755410673052
+Failure probability (%): 14.286755410673052
+>>>
