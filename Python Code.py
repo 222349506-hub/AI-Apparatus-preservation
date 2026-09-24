@@ -1601,10 +1601,6 @@ test_machine = pd.DataFrame({
 
 })
 
-
-# Make sure the feature order matches
-# the order used during model training.
-
 test_machine = test_machine[
     loaded_model.feature_names_in_
 ]
